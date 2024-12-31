@@ -1,0 +1,51 @@
+select
+{[Measures].[Order Quantity]
+} on rows,
+{
+[Dim Product].[Model Name].members
+}on columns
+
+from [Adventure Works DW2022]
+
+select
+non empty 
+{[Order Date].[Calendar Year].members
+} on 1,
+non empty
+{
+[Dim Product].[Model Name].members
+}on 0
+
+from [Adventure Works DW2022]
+
+
+where [Measures].[Sales Amount]
+
+SELECT
+    {[Dim Customer].[Gender].&[F]} ON ROWS,
+    {[Dim Product].[Model Name].MEMBERS} ON COLUMNS
+FROM [Adventure Works DW2022]
+WHERE [Measures].[Sales Amount]
+
+
+select
+non empty 
+{([Order Date].[Calendar Year].members , [Dim Customer].[Gender].&[F]) }on rows
+non empty
+{
+[Dim Sales Territory].[Sales Territory Region].[Sales Territory Region].members
+}on columns
+
+from [Adventure Works DW2022]
+
+
+where [Measures].[Order Quantity]
+
+SELECT
+    CROSSJOIN(
+        {[Dim Customer].[Gender].&[F], [Dim Customer].[Gender].&[M]},
+        {[Dim Sales Territory].[Sales Territory Region].&[Canada], [Dim Sales Territory].[Sales Territory Region].&[United Kingdom]}
+    ) ON ROWS,
+    {[Dim Product].[Model Name].MEMBERS} ON COLUMNS
+FROM [Adventure Works DW2022]
+WHERE [Measures].[Sales Amount]
